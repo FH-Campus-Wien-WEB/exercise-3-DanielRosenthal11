@@ -8,6 +8,7 @@ h1 {
 /* Constrain the page to the viewport */
 html, body {
   height: 100vh;
+  margin: 0; /* Verhindert unnötige Scrollbalken am ganzen Fenster */
 }
 
 /* Center the nav's header and list */
@@ -30,12 +31,41 @@ ul {
 }
 
 /* Task 2.1. Lay out the childs of the 'body' using Grid Template Areas. */
+/* Mobile First Layout (Stack) */
+body {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto 1fr auto;
+  grid-template-areas:
+    "h"
+    "n"
+    "m"
+    "f";
+}
 
+header { grid-area: h; }
+nav { grid-area: n; }
+main { 
+  grid-area: m; 
+  overflow-y: auto; /* Nur der Main-Bereich darf scrollen */
+}
+footer { grid-area: f; }
+
+/* Desktop Layout (Responsive ab 768px) */
+@media (min-width: 768px) {
+  body {
+    grid-template-columns: 224px 1fr; /* Entspricht 192 bis 256px */
+    grid-template-rows: 96px 1fr 96px; /* Entspricht 64 bis 128px */
+    grid-template-areas:
+      "h h"
+      "n m"
+      "f f";
+  }
+}
 
 /* Task 3.1. Make the header element a flex container and center its children
    vertically and horizontally.
  */
-
 
 /* Task 3.2. Make the list items of the unordered list in the nav element a flex container, 
    use column direction and center the child items
@@ -43,9 +73,7 @@ ul {
 
 /* Task 3.3. Make the main element a Flexbox container */
 
-
 /* Task 3.4. Make the footer's ul a Flexbox container */
-
 
 /* From here on styling from exercise 1 */
 img {
