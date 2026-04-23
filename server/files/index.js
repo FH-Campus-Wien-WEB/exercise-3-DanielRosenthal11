@@ -30,6 +30,11 @@ function appendMovie(movie, element) {
               "\u2022",
               "Released on " +
                 new Date(movie.Released).toLocaleDateString("en-US")))
+          /* NEU: Metascore und IMDb Rating hinzugefügt */
+          .append(new ParagraphBuilder().items(
+              "IMDb Rating: " + movie.imdbRating,
+              "\u2022",
+              "Metascore: " + movie.Metascore))
           .append(new ParagraphBuilder().childClass("genre").items(movie.Genres))
           .append(new ElementBuilder("p").text(movie.Plot))
           .append(new ElementBuilder("h2").pluralizedText("Director", movie.Directors))
@@ -61,7 +66,6 @@ function loadMovies(genre) {
   }
 
   const url = new URL("/movies", location.href);
-  /* Task 2.2. Add query parameter to the url if a genre is given */
   if (genre && genre !== "All") {
     url.searchParams.set("genre", genre);
   }
@@ -78,7 +82,6 @@ window.onload = function () {
     if (xhr.status === 200) {
       const genres = JSON.parse(xhr.responseText);
 
-      /* Task 1.3. Add the genre buttons */
       const allLi = document.createElement("li");
       const allBtn = document.createElement("button");
       allBtn.textContent = "All";
@@ -95,7 +98,6 @@ window.onload = function () {
         listElement.appendChild(li);
       });
 
-      /* When a first button exists, we click it to load all movies. */
       const firstButton = document.querySelector("nav button");
       if (firstButton) {
         firstButton.click();
